@@ -28,6 +28,8 @@ def build_library(conn, spec: LibrarySpec, root_dir, output_folder) -> None:
         category_filter=spec.category_filter,
     )
 
+    print(f"Building library: {spec.libname}")
+
     if spec.extends_symbol_lookup is not None:
         kwargs["extends_symbol_lookup"] = spec.extends_symbol_lookup
 
