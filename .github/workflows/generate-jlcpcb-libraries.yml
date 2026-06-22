@@ -32,9 +32,9 @@ jobs:
           if [ github.event_name != 'schedule' ]; then
             exit 0
           fi
-      - name: Restore previous state
-        uses: actions/cache/restore@v5
-        id: cache-restore
+      - name: Cache state (restore + save with save-always)
+        uses: actions/cache@v5
+        id: cache-state
         with:
           path: .state
           key: jlcparts-state-${{ github.run_id }}
@@ -70,13 +70,6 @@ jobs:
           else
             echo "changed=false" >> "$GITHUB_OUTPUT"
           fi
-
-      - name: Save state
-        if: always()
-        uses: actions/cache/save@v5
-        with:
-          path: .state
-          key: jlcparts-state-${{ github.run_id }}
 
   build-and-publish:
     runs-on: ubuntu-latest
