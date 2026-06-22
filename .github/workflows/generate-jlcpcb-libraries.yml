@@ -88,14 +88,14 @@ jobs:
 
     steps:
       - name: Checkout source repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           path: source
           persist-credentials: false
           submodules: recursive
 
       - name: Checkout generated libraries repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: FutureProofHomes/kicad-jlcpcb-libraries
           token: ${{ secrets.LIBS_REPO_PAT }}
