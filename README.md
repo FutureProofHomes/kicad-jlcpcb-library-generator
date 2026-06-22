@@ -9,12 +9,13 @@ Generate a KiCad symbol library (`.kicad_sym`) from a list of JLCPCB components 
 - Generates a KiCad symbol library in the modern s-expression `.kicad_sym` format.
 - Writes common symbol fields such as `Value`, `Footprint`, `Datasheet`, `LCSC`, `Manufacturer`, and `MPN`.
 - Where possible adds fields from attributes and unit prices at 10,100,& 1k
+- Libraries created by this are output to [FutureProofHomes/kicad-jlcpcb-libraries](https://github.com/FutureProofHomes/kicad-jlcpcb-libraries)
 
 ## What it does not do
 
 - It does not generate custom footprints.
 - It does not guarantee a valid mapping for every JLCPCB/LCSC package.
-- It does not fetch live catalog data; this project uses a cached BD from JLCPCB, likeley updated weekly, see [upstream](https://yaqwsx.github.io/jlcparts).
+- It does not fetch live catalog data; this project uses a 3rd party cached BD from JLCPCB, updated daily, see [upstream](https://yaqwsx.github.io/jlcparts).
 
 ## Repository layout
 
