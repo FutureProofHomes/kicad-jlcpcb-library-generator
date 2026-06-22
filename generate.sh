@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+mkdir -p cache build
+wget -nv -N -c https://yaqwsx.github.io/jlcparts/data/cache.zip -P cache/
+
+for i in $(seq -w 1 99); do
+  url="https://yaqwsx.github.io/jlcparts/data/cache.z$i"
+  wget -nv -N -c "$url" -P cache/ || break
+done
+
+7z x cache/cache.zip -ocache/ -aoa
+
+python3 src/jlc_kicad_lib/main.py
+find build -name '*.kicad_sym' -type f -print0 | xargs -0 -r perl -i -0777 -pe 's/\(justify\s*\n\s*\(\s*(\w+)\s*\)\s*\n\s*\)/(justify $1)/g'
+python3 src/kicad-symbols/tools/kicad_lib_pack.py -i build -o output

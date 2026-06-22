@@ -1,0 +1,9 @@
+src/.DS_Store
+src/jlc_kicad_lib/__pycache__/
+tests/__pycache__/
+.venv/
+src/jlcpcb_to_kicad_sym.egg-info/
+src/__pycache__/
+build/
+output/
+cache/
