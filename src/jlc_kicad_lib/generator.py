@@ -38,9 +38,18 @@ def build_library(conn, spec: LibrarySpec, root_dir, output_folder) -> None:
 
     append_parts(**kwargs)
 
-def create_library(libname: str, output_dir: str):
+def create_library(libname: str, output_dir: Path):
     output_dir.mkdir(parents=True, exist_ok=True)
     library_path = output_dir / f"{libname}.kicad_sym"
+    if library_path.exists():
+        counter = 1
+        while True:
+            candidate = output_dir / f"{libname}_Alt{counter}.kicad_sym"
+            if not candidate.exists():
+                library_path = candidate
+                break
+            counter += 1
+
     return KicadLibrary(str(library_path))
 
 def append_parts(conn, name_template, libname, output_dir, root_dir, category_filter, value_template, package_source,
@@ -129,12 +138,12 @@ def append_parts(conn, name_template, libname, output_dir, root_dir, category_fi
             
             # print(keywords)
 
-            clean_name = re.sub(r'[\\/:*?"<>|]+', '_', name).strip(" .")
+            clean_name = re.sub(r'[\\/:*?"<>| ]+', '_', re.sub(r'\s*\([^)]*\)', '', name)).strip(" .")
             lib = create_library(clean_name,output_dir)
 
             clean_description = re.sub(r'[^-A-Za-z 0-9%()℃~+-,±@Ω/\\.]', '', description.strip())
             new_symbol = KicadSymbol.new(
-                name=name,
+                name=Path(lib.filename).stem,
                 libname=libname,
                 datasheet=datasheet,
                 description=clean_description,
@@ -154,7 +163,7 @@ def append_parts(conn, name_template, libname, output_dir, root_dir, category_fi
 
             val = new_symbol.get_property("Value")
             apply_updates(val, {
-                "value": value,
+                "value": re.sub(r'[\\/:*?"<>|]+', '_', re.sub(r'\s*\([^)]*\)', '', value)).strip(" ."),
                 "posx": val_text_posx,
                 "posy": val_text_posy,
                 "rotation": val_text_rotation,
@@ -216,6 +225,7 @@ SELECT
     price
 FROM jlc_components
 WHERE {where_clause}
+ORDER BY library_type
 """
 
 
