@@ -77,7 +77,15 @@ libraries = [
         package_source=ferritebead_packages,
         name_template = '"_".join(filter(None,[data.get("Impedance @ Frequency"),package_name,data.get("Current Rating", ""),data.get("Tolerance", "")]))',
         value_template="data['Impedance @ Frequency']",
-        category_filter='"Subcategory" LIKE "Ferrite Beads"',
+        category_filter='"Subcategory" = "Ferrite Beads"',
+    ),
+    LibrarySpec(
+        libname="JLCPCB_Basic_Inductor",
+        extends_symbol="Device.kicad_symdir/L.kicad_sym",
+        package_source=inductor_packages,
+        name_template = '"_".join(filter(None,[data.get("Impedance @ Frequency"),package_name,data.get("Current Rating", ""),data.get("Tolerance", "")]))',
+        value_template="data['Impedance @ Frequency']",
+        category_filter='"Subcategory" = "Inductors (SMD)"',
     ),
     LibrarySpec(
         libname="JLCPCB_Basic_LED",

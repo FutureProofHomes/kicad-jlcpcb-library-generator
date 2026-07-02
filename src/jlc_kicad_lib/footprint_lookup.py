@@ -48,6 +48,14 @@ def ferritebead_packages():
         ('1206', 'Inductor_SMD:L_1206_3216Metric', 'like "%1206"'),
 ]
 
+def inductor_packages():
+    return [
+        ('0402', 'Inductor_SMD:L_0402_1005Metric', 'like "%402"'),
+        ('0603', 'Inductor_SMD:L_0603_1608Metric', 'like "%603"'),
+        ('0805', 'Inductor_SMD:L_0805_2012Metric', 'like "%805"'),
+        ('1206', 'Inductor_SMD:L_1206_3216Metric', 'like "%1206"'),
+]
+
 def led_packages():
     return [
     ('0402', 'LED_SMD:LED_0402_1005Metric', 'like "%402"'),
