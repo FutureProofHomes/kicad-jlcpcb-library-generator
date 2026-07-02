@@ -6,6 +6,21 @@ def resistor_packages():
         ('1206', 'Resistor_SMD:R_1206_3216Metric', 'like "%1206"'),
     ]
 
+def resistor_array_packages():
+    return [
+        ('0402x2', 'Resistor_SMD:R_Array_Convex_2x0402', '= "0402x2"'),
+        ('0603x2', 'Resistor_SMD:R_Array_Convex_2x0603', '= "0603x2"'),
+        ('0606x2', 'Resistor_SMD:R_Array_Convex_2x0606', '= "0606x2"'),
+        ('1206x2', 'Resistor_SMD:R_Array_Convex_2x1206', '= "1206x2"'),
+        ('0402x4', 'Resistor_SMD:R_Array_Convex_4x0402', '= "0402x4"'),
+        ('0603x4', 'Resistor_SMD:R_Array_Convex_4x0603', '= "0603x4"'),
+        ('0612x4', 'Resistor_SMD:R_Array_Convex_4x0612', '= "0612x4"'),
+        ('1206x4', 'Resistor_SMD:R_Array_Convex_4x1206', '= "1206x4"'),
+        ('0603x5', 'Resistor_SMD:R_Array_Convex_5x0603', '= "0603x5"'),
+        ('1206x5', 'Resistor_SMD:R_Array_Convex_5x1206', '= "1206x5"'),
+        ('0602x8', 'Resistor_SMD:R_Array_Convex_8x0602', '= "0602x8"'),
+    ]
+
 def diode_packages():
     return [
         ('0402', 'Diode_SMD:D_0402_1005Metric', 'like "%402"'),

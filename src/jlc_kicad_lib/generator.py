@@ -33,6 +33,9 @@ def build_library(conn, spec: LibrarySpec, root_dir, output_folder) -> None:
     if spec.extends_symbol_lookup is not None:
         kwargs["extends_symbol_lookup"] = spec.extends_symbol_lookup
 
+    if spec.extends_symbol_package_lookup is not None:
+        kwargs["extends_symbol_package_lookup"] = spec.extends_symbol_package_lookup
+
     if spec.extends_symbol is not None:
         kwargs["extends_symbol"] = spec.extends_symbol
 
@@ -53,7 +56,7 @@ def create_library(libname: str, output_dir: Path):
     return KicadLibrary(str(library_path))
 
 def append_parts(conn, name_template, libname, output_dir, root_dir, category_filter, value_template, package_source,
-                 extends_symbol=None, extends_symbol_lookup=None, footprint=None,
+                 extends_symbol=None, extends_symbol_lookup=None, extends_symbol_package_lookup=None, footprint=None,
                  reference=None, ref_text_posx=None, ref_text_posy=None,
                  val_text_posx=None, val_text_posy=None, ref_text_rotation=None,
                  val_text_rotation=None, 
@@ -75,7 +78,7 @@ def append_parts(conn, name_template, libname, output_dir, root_dir, category_fi
         cursor = conn.cursor()
         cursor.execute(build_query(where_clause))
 
-        for lcsc_part, mfg_name, mfg_part, description, attributes, datasheet, stock, price in cursor.fetchall():
+        for lcsc_part, mfg_name, mfg_part, package, description, attributes, datasheet, stock, price in cursor.fetchall():
             data = json.loads(attributes)
             try:
                 value = eval(value_template)
@@ -101,6 +104,14 @@ def append_parts(conn, name_template, libname, output_dir, root_dir, category_fi
                 # source_relpath = extends_symbol_lookup.get(mfg_part)
                 for pattern, symbol in extends_symbol_lookup.items():
                     if fnmatchcase(mfg_part, pattern):
+                        source_relpath = symbol
+                if source_relpath is  None:
+                    print(f"Skipping {lcsc_part}: no symbol match for {mfg_part}")
+                    continue
+            if extends_symbol_package_lookup is not None:
+                # source_relpath = extends_symbol_lookup.get(mfg_part)
+                for pattern, symbol in extends_symbol_package_lookup.items():
+                    if fnmatchcase(package, pattern):
                         source_relpath = symbol
                 if source_relpath is  None:
                     print(f"Skipping {lcsc_part}: no symbol match for {mfg_part}")
@@ -211,6 +222,7 @@ SELECT
     CAST('C' || lcsc AS varchar) AS lcsc_part,
     manufacturer,
     mfr AS mpn,
+    package,
     (
         SELECT COALESCE(MAX(result), Description)
         FROM (

@@ -12,6 +12,7 @@ class LibrarySpec:
     category_filter: str
     extends_symbol: Optional[str] = None
     extends_symbol_lookup: Optional[dict[str, str]] = None
+    extends_symbol_package_lookup: Optional[dict[str, str]] = None
     reference: Optional[str] = None
 
 libraries = [
@@ -56,6 +57,20 @@ libraries = [
         category_filter='"Category" = "Resistors" and "Subcategory" = "Chip Resistor - Surface Mount"',
     ),
     LibrarySpec(
+        libname="JLCPCB_Basic_Resistor_Array",
+        # extends_symbol="Device.kicad_symdir/R.kicad_sym",
+        extends_symbol_package_lookup={
+            "*x2": "Device.kicad_symdir/R_Pack02.kicad_sym",
+            "*x4": "Device.kicad_symdir/R_Pack04.kicad_sym",
+            "*x5": "Device.kicad_symdir/R_Pack05.kicad_sym",
+            "*x8": "Device.kicad_symdir/R_Pack08.kicad_sym",
+        },
+        package_source=resistor_array_packages,
+        name_template = '"_".join(filter(None,[data.get("Resistance"),package_name,data.get("Tolerance", "")]))',
+        value_template="re.sub(r'[^a-zA-Z0-9.]', '', data['Resistance'])",
+        category_filter='"Category" = "Resistors" and "Subcategory" = "Resistor Networks, Arrays"',
+    ),
+    LibrarySpec(
         libname="JLCPCB_Basic_Capacitor_MLCC",
         extends_symbol="Device.kicad_symdir/C.kicad_sym",
         package_source=capacitor_packages,
@@ -83,8 +98,8 @@ libraries = [
         libname="JLCPCB_Basic_Inductor",
         extends_symbol="Device.kicad_symdir/L.kicad_sym",
         package_source=inductor_packages,
-        name_template = '"_".join(filter(None,[data.get("Impedance @ Frequency"),package_name,data.get("Current Rating", ""),data.get("Tolerance", "")]))',
-        value_template="data['Impedance @ Frequency']",
+        name_template = '"_".join(filter(None,[data.get("Inductance"),package_name,data.get("Current Rating", ""),data.get("DC Resistance(DCR)",""),data.get("Tolerance", "")]))',
+        value_template="data['Inductance']",
         category_filter='"Subcategory" = "Inductors (SMD)"',
     ),
     LibrarySpec(
