@@ -41,16 +41,18 @@ Generate a KiCad symbol library (`.kicad_sym`) from a list of JLCPCB components 
 
 ## Input
 
+The github action checks for changes in the remote library every 30 minutes, if there is it triggeres a run.
 This script fetches the latest SQLite DB from https://yaqwsx.github.io/jlcparts and generates some basic libraries from it.
 
 ## Current scope
 
-This scaffold supports a small set of atomic symbols:
+This scaffold supports a small set of symbols:
 
 - Resistors (SMD Chip)
-- Capacitors (SMD MLCC)
+- Resistor array (SMD Chip)
+- Capacitors (SMD MLCC, SMD Tantalum)
 - Diodes (SMD General, Schottky, Zener)
-- Inductors (SMD Ferrite Bead)
+- Inductors (SMD Ferrite Bead, SMD Inductor)
 - LEDs (SMD)
 - BJT's (SMD)
 - MOSFET's (SMD)
