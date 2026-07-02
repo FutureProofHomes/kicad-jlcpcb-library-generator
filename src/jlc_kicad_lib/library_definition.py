@@ -64,6 +64,14 @@ libraries = [
         category_filter='"Category" = "Capacitors" and "Subcategory" = "Multilayer Ceramic Capacitors MLCC - SMD/SMT"',
     ),
     LibrarySpec(
+        libname="JLCPCB_Basic_Capacitor_Tantalum",
+        extends_symbol="Device.kicad_symdir/C_Polarized.kicad_sym",
+        package_source=capacitor_tantalum_packages,
+        name_template = '"_".join(filter(None,[data.get("Capacitance"),package_name,data.get("Voltage Rating", ""),data.get("Temperature Coefficient", ""),data.get("Tolerance", "")]))',
+        value_template="data['Capacitance']",
+        category_filter='"Category" = "Capacitors" and "Subcategory" = "Tantalum Capacitors"',
+    ),
+    LibrarySpec(
         libname="JLCPCB_Basic_FerriteBead",
         extends_symbol="Device.kicad_symdir/FerriteBead.kicad_sym",
         package_source=ferritebead_packages,

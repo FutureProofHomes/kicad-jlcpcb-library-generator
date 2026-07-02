@@ -33,6 +33,12 @@ def capacitor_packages():
         ('1206', 'Capacitor_SMD:C_1206_3216Metric', 'like "%1206"'),
     ]
 
+def capacitor_tantalum_packages():
+    return [
+        ('3216', 'Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A', '= "CASE-A-3216-18(mm)"'),
+        ('3528', 'Capacitor_Tantalum_SMD:CP_EIA-3528-21_Kemet-B', '= "CASE-B-3528-21(mm)"'),
+    ]
+
 
 def ferritebead_packages():
     return [
