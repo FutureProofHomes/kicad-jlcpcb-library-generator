@@ -108,7 +108,7 @@ def append_parts(conn, name_template, libname, output_dir, root_dir, category_fi
                 if source_relpath is  None:
                     print(f"Skipping {lcsc_part}: no symbol match for {mfg_part}")
                     continue
-            if extends_symbol_package_lookup is not None:
+            elif extends_symbol_package_lookup is not None:
                 # source_relpath = extends_symbol_lookup.get(mfg_part)
                 for pattern, symbol in extends_symbol_package_lookup.items():
                     if fnmatchcase(package, pattern):
